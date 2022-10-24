@@ -70,4 +70,32 @@ const fetchISSFlyoverTimes = function(coords, callback) {
   });
 };
 
-module.exports = { fetchMyIP, fetchCoordinatesByIP, fetchISSFlyoverTimes };
+//Next times for location function
+
+const nextISSTimesForMyLocation = function(callback) {
+  //Call on fetch my IP function
+  fetchMyIP((error, ip) => {
+    //If there's an error, return it via callback
+    if (error) {
+      return callback(error, null);
+    }
+    //Call on fetch coordinates by IP function
+    fetchCoordinatesByIP(ip, (error, location) => {
+      //If there's an error, return it via callback
+      if (error) {
+        return callback(error, null);
+      }
+      //Call on fetch fly over times function
+      fetchISSFlyoverTimes(location, (error, times) => {
+      //If there's an error, return it via callback
+        if (error) {
+          return callback(error, null);
+        }
+        //If we get this far without errors, return the fly over times via callback
+        callback(null, times);
+      });
+    });
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordinatesByIP, fetchISSFlyoverTimes, nextISSTimesForMyLocation };
