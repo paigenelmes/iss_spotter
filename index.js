@@ -47,3 +47,5 @@ nextISSTimesForMyLocation((error, flyOverTimes) => {
   getFlyOverTimes(flyOverTimes);
   
 });
+
+module.exports = {getFlyOverTimes};
